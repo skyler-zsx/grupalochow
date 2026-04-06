@@ -1,0 +1,457 @@
+body {
+    background: linear-gradient(to bottom, #f4f1ea 0%, #000 100vh, #000 1000vh); /* Світлий верх, швидкий перехід в чорний */
+    color: #1a1a1a; /* Темно-сірий, не чистий чорний */
+    font-family: 'Courier New', Courier, monospace; /* Друкарська машинка */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    line-height: 1.6;
+    /* Фонові хребти по боках (Фіксовані) */
+    background-image: url('cat.png'), url('cat.png'); /* Потрібно завантажити image_8.png як spinal-column.png */
+    background-repeat: no-repeat, no-repeat;
+    background-position: left 20px top 100px, right 20px top 100px;
+    background-size: contain, contain;
+    background-attachment: fixed, fixed; /* Хребти не рухаються при скролі */
+}
+
+/* --- 2. Контейнер LED банера --- */
+.led-container {
+    width: 100%;
+    height: 220px; /* Збільшили, щоб вліз текст 160px + відступи */
+    background-color: #e3dbdb;
+    overflow: hidden; /* Ховаємо текст, що виходить за межі "вікна" */
+    border-bottom: 10px solid rgba(255, 0, 0, 0.6);
+    box-shadow: 0px 8px 60px rgba(255, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 20;
+
+}
+
+.led-container::after{
+    display: none;
+}
+/* --- 3. Стрічка, що рухається --- */
+.led-track {
+    display: flex;
+    width: max-content; /* Стрічка розтягується під довжину всього тексту */
+    animation: scroll 30s linear infinite;
+    will-change: transform; /* Оптимізація анімації для кращої продуктивності */
+}
+
+.led-item {
+    display: flex;
+    align-items: center;
+    gap: 0px; /* Відстань між лого та текстом */
+    padding-right: 100px; /* Відстань перед наступним повтором */
+}
+/* --- 4. Текст та Лого --- */
+.led-item span {
+    color: rgb(240, 236, 204);
+    font-family: 'Bungee', sans-serif; 
+    font-size: 200px;
+    white-space: nowrap; 
+    filter: drop-shadow(0 0 8px red) ; /* Додаємо легке світіння */
+}
+
+.logo {
+    height: 180px; /* Масштабуємо лого під розмір тексту */
+    width: auto;
+    margin-right: 40px; /* Відстань між лого та текстом */
+    filter: drop-shadow(0 0 8px red);
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%) ;
+    }
+}
+
+.content-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 50px 20px;
+}
+
+.cards {
+    width: 80%;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(100px);
+    border: 4px solid rgba(255, 0, 0, 0.6);
+    border-radius: 15px;
+    padding: 30px;
+    color: #ef7373;
+    font-family: oswold, sans-serif;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.cards:active{
+    transform: scale(0.95);
+    box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.4);
+    transition: transform 0.1s;
+}
+
+.cards::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150px;
+    height: 100%;
+    background:linear-gradient(to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    pointer-events: none;
+}
+
+.cards:hover::after{
+    left: 150%;
+    transition: left 0.7s ease-in-out;
+}
+
+.cards:hover {
+    transform: translate3d(7.5px, -7.5px, 7.5px);
+    transfor: translateY(-7,5px);
+    border-color: rgba(255, 0, 0, 0.6);
+    background: rgba(255, 0, 0, 0.025);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+}
+
+.cards span {
+    font-size: 270%;
+    margin-top: 0;
+    color: rgb(240, 236, 204);
+    filter: drop-shadow(0 0 3px red);
+    font-family: 'Bungee', sans-serif;
+}
+
+.action-btn{
+    background: red;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Bungee', sans-serif;
+    cursor: pointer;
+    border-radius: 7.5px;
+}
+
+/* --- Класи для епатажного тексту --- */
+.huge-text {
+    font-size: 15vw;
+    font-family: 'Bungee', sans-serif;
+    color: #cc0000; /* Темно-червоний */
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -5px;
+    margin: 100px 0;
+    text-align: center;
+    
+    /* Світіння як від сигарети на каві (image_14.png) */
+    filter: drop-shadow(0 0 20px #ff6666); 
+}
+
+/* Ефект розбитого скла (Glitch/Broken) */
+.broken-glass {
+    position: relative;
+    display: inline-block;
+}
+
+.broken-glass::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('broken-glass-overlay.png'); /* Прозорий png з тріщинами */
+    background-size: cover;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+
+/*product*/
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    padding: 50px;
+    max-width:1200px;
+    max-height: 100%;
+    margin: 0 auto;
+    background-colo: black;
+}
+
+.product-card{
+    background: rgb(255, 255, 255);
+    border: 2px solid rgba(255, 0, 0, 1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    backdrop-filter: blur(100px);
+    text-decoration: none;
+    cursor: pointer;
+    color: #000;
+}
+
+.product-card:active{
+    box-shadow: inset 0 0 40px rgba(255, 0, 0, 0.8); 
+    transform: translateY(-10px);
+    transition: transform 0.1s;
+}
+
+.product-card::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150px;
+    height: 100%;
+    background:linear-gradient(to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    pointer-events: none;
+}
+
+.product-card:hover {
+    transfor: translate3d(10px, -10px, 10px);
+    transform: translateY(-10px);
+    border-color: rgba(255, 0, 0, 0.6);
+    background: rgba(255, 0, 0, 0.025);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+}
+
+.product-card:hover::after{
+    left: 150%;
+    transition: left 0.7s ease-in-out;
+}
+
+.product-img img {
+    width: 30%;
+    height: 30%;
+    display: block;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(120%);
+}
+
+.product-img{
+    position: flex;
+    height: 350px;
+    background: #1a1a1a;
+}
+
+.status-tag{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: red;
+    color: #fff;
+    padding: 5px 10px;
+    font-family: 'Bungee', sans-serif;
+    font-size: 0.8rem;
+    transform: rotate(5deg);
+}
+
+.status-tag.sold-out{
+    background: #333;
+    text-decoration: line-through;
+}
+
+.product-info {
+    padding: 20px;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.products-info h3{
+    color: red;
+    margin: 0 0 10px 0;
+    font-family: 'Bungee', sans-serif;
+}
+
+.price{
+    font-size: 1.5rem;
+    margin: 15px 0;
+    font-weight: bold;
+    color: #f0eaea;
+    text-decoration: underline;
+}
+
+.buy-btn{
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 2px solid rgba(255, 0, 0, 1);
+    border-radius: 7.5px;
+    color: rgba(255, 0, 0, 1);
+    font-family: 'Bungee', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.buy-btn:hover:not(.disabled){
+    background: rgba(255, 0, 0, 0.6);
+    color: white;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+    border: 2px solid rgba(255, 0, 0, 0.6);
+}
+
+.buy-btn.disabled{
+    border-color: #444;
+    color: #444;
+    cursor: not-allowed; 
+}
+
+/* --- POSTS (Особистий Щоденник) --- */
+.posts-wrapper {
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+}
+
+/* Стара сторінка (вайб image_18.png) */
+.journal-page {
+    background-color: #fcfcf9;
+    width: 800px;
+    padding: 60px;
+    border: 1px solid #000;
+    color: black;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.1); /* Внутрішня тінь паперу */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Закривавлений відбиток пальця у кутку */
+.journal-page::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; right: -10px;
+    width: 80px; height: 80px;
+    background-image: url('fingerprints.png'); /* image_4.png reference */
+    background-size: contain;
+    opacity: 0.6;
+}
+
+.journal-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    font-size: 0.8rem;
+    color: #444;
+}
+
+.main-quote {
+    color: #cc0000;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Bungee', sans-serif;
+    margin: 40px 0;
+    letter-spacing: -2px;
+}
+
+.journal-text {
+    line-height: 1.4;
+    margin-bottom: 40px;
+}
+
+.journal-scars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.journal-scars img {
+    width: 100%;
+    filter:grayscale(100%);
+    opacity: 0.8;
+}
+
+/* Додай це у файл ss.css */
+
+cards:nth-child(odd) {
+    transform: rotate(-1.5deg); /* Нахил вліво для непарних */
+}
+
+cards:nth-child(even) {
+    transform: rotate(1.2deg); /* Нахил вправо для парних */
+    margin-left: 20px; /* Трохи змістимо вбік */
+}
+
+cards:hover {
+    transform: scale(1.05) rotate(0deg) !important; /* При наведенні вирівнюється */
+    z-index: 100;
+}
+
+.huge-text {
+    /* Твій існуючий код... */
+    letter-spacing: -10px; /* Дуже щільні букви */
+    filter: blur(30px); /* Легке розмиття за замовчуванням */
+    transition: filter 0.3s ease;
+    font-size: 7rem;
+}
+
+.huge-text:hover {
+    filter: blur(0px); /* Стає чітким, коли наводиш */
+}
+
+/* --- Ефект розбитого скла (Оверлей) --- */
+
+/* Контейнер зображення має бути position: relative */
+.evidence-image {
+    position: relative;
+    overflow: hidden; /* Щоб тріщини не виходили за межі */
+}
+
+/* Сам блок оверлею */
+.broken-glass-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 10; /* Поверх зображення */
+    pointer-events: none; /* Щоб не заважав клікати */
+}
+
+/* Тріщини (псевдоелемент) */
+.broken-glass-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    
+    /* Шлях до твого прозорого png з тріщинами */
+    background-image: url('broken-glass-cracks.png'); 
+    background-size: cover;
+    background-position: center;
+    
+    opacity: 0.6; /* Напівпрозорість тріщин */
+    filter: drop-shadow(0 0 5px #ccc); /* Легке світіння тріщин */
+    
+    transition: opacity 0.3s ease;
+}
+
+/* Ефект при наведенні (тріщини стають чіткішими) */
+.evidence-card:hover .broken-glass-overlay::after {
+    opacity: 1; /* Тріщини стають яскравими */
+    filter: drop-shadow(0 0 10px white);
+}
